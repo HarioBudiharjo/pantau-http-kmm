@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.2
+
+### Fixed
+- Swift: `PantauHttpConfiguration` and other `com.pantauhttp` APIs with default arguments now get
+  partial-argument overloads (e.g. `PantauHttpConfiguration(dashboardUrl: "...")`). SKIE's
+  default-argument cap is raised from 5 to 8 parameters.
+
 ## 2.0.1
 
 ### Fixed

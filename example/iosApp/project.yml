@@ -6,7 +6,7 @@ options:
 packages:
   PantauHTTP:
     url: https://github.com/HarioBudiharjo/pantau-http-kmm.git
-    from: "2.0.1"
+    from: "2.0.2"
 targets:
   PantauDemo:
     type: application

@@ -70,4 +70,4 @@ public class HarCache
 @Serializable
 public data class HarTimings(val send: Double = -1.0, val wait: Double = -1.0, val receive: Double)
 
-internal const val PANTAU_HTTP_VERSION: String = "2.0.1"
+internal const val PANTAU_HTTP_VERSION: String = "2.0.2"

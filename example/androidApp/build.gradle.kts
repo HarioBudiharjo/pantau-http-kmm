@@ -32,8 +32,8 @@ android {
 
 dependencies {
     // The SDK, straight from GitHub Pages. Debug-only so it never ships in a release build.
-    debugImplementation("com.pantauhttp:pantau-http:2.0.1")
-    releaseImplementation("com.pantauhttp:pantau-http-core:2.0.1") // keeps the API compiling; nothing is started in release
+    debugImplementation("com.pantauhttp:pantau-http:2.0.2")
+    releaseImplementation("com.pantauhttp:pantau-http-core:2.0.2") // keeps the API compiling; nothing is started in release
 
     implementation("androidx.activity:activity-compose:1.13.0")
     implementation(compose.runtime)

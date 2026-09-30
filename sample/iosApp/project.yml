@@ -40,7 +40,7 @@ targets:
       path: PantauHttpSample/Info.plist
       properties:
         CFBundleDisplayName: Pantau Sample
-        CFBundleShortVersionString: "2.0.1"
+        CFBundleShortVersionString: "2.0.2"
         CFBundleVersion: "1"
         UILaunchScreen: {}
         CADisableMinimumFrameDurationOnPhone: true

@@ -11,16 +11,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         #if DEBUG
         // Start BEFORE any URLSession is created so default-configuration sessions pick up the capture engine.
         let dashboardURL = ProcessInfo.processInfo.environment["PANTAU_DASHBOARD_URL"]
-        PantauHttp.shared.start(configuration: PantauHttpConfiguration(
-            maxTransactions: 200,
-            bodySizeLimit: 1_048_576,
-            shakeEnabled: true,
-            notificationPolicy: .whenBackgrounded,
-            redactedHeaders: ["Authorization", "Cookie", "Set-Cookie", "Proxy-Authorization"],
-            ignoredHosts: [],
-            dashboardUrl: dashboardURL,
-            dashboardDeviceName: nil
-        ))
+        PantauHttp.shared.start(configuration: PantauHttpConfiguration(dashboardUrl: dashboardURL))
         #endif
 
         let window = UIWindow(frame: UIScreen.main.bounds)

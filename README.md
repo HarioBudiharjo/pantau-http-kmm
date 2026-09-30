@@ -39,9 +39,9 @@ dependencyResolutionManagement {
 
 ```kotlin
 // commonMain
-implementation("com.pantauhttp:pantau-http:2.0.1")        // capture + Compose UI
+implementation("com.pantauhttp:pantau-http:2.0.2")        // capture + Compose UI
 // or, headless (no Compose): capture, exports and dashboard push only
-implementation("com.pantauhttp:pantau-http-core:2.0.1")
+implementation("com.pantauhttp:pantau-http-core:2.0.2")
 ```
 
 The same coordinates are also on [GitHub Packages](https://github.com/HarioBudiharjo?tab=packages&repo_name=pantau-http-kmm) (`https://maven.pkg.github.com/HarioBudiharjo/pantau-http-kmm`, which GitHub gates behind a token with `read:packages`), and `./gradlew publishToMavenLocal` puts them in `~/.m2` when building from source.
@@ -52,7 +52,7 @@ Consider keeping it out of release builds (`debugImplementation`, or a `BuildCon
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/HarioBudiharjo/pantau-http-kmm.git", from: "2.0.1")
+    .package(url: "https://github.com/HarioBudiharjo/pantau-http-kmm.git", from: "2.0.2")
 ]
 ```
 
@@ -130,13 +130,9 @@ Notifications require the host app to request `POST_NOTIFICATIONS` on API 33+; t
 import PantauHTTP
 
 // AppDelegate, before any URLSession is created
-PantauHttp.shared.start(configuration: PantauHttpConfiguration())          // defaults
-PantauHttp.shared.start(configuration: PantauHttpConfiguration(            // or explicit: 2.0.1 exposes the full
-    maxTransactions: 200, bodySizeLimit: 1_048_576, shakeEnabled: true,   // initializer only (partial-argument
-    notificationPolicy: .whenBackgrounded,                                 // overloads arrive in the next release)
-    redactedHeaders: ["Authorization", "Cookie", "Set-Cookie", "Proxy-Authorization"],
-    ignoredHosts: [], dashboardUrl: "http://192.168.1.20:9435", dashboardDeviceName: nil
-))
+PantauHttp.shared.start(configuration: PantauHttpConfiguration())                 // defaults
+PantauHttp.shared.start(configuration: PantauHttpConfiguration(dashboardUrl: "http://192.168.1.20:9435"))
+// Every Kotlin default argument is available from Swift (SKIE); pass only what you change.
 
 // Custom sessions and Alamofire: inject the engine BEFORE creating the session
 let configuration = URLSessionConfiguration.default
