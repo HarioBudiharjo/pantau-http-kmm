@@ -1,0 +1,165 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../pantau-http-core/2.0.1/pantau-http-core-2.0.1.module",
+    "group": "com.pantauhttp",
+    "module": "pantau-http-core",
+    "version": "2.0.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.1.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "io.ktor",
+          "module": "ktor-client-core",
+          "version": {
+            "requires": "3.2.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pantau-http-core.aar",
+          "url": "pantau-http-core-android-2.0.1.aar",
+          "size": 248595,
+          "sha512": "b0b2bfee8ce0e702229c4ecaede120aa7117882f1aae6b1ead30360647717cfd7c5e2425c8e9f22242d236aaffe1f0febb93302264138dcbd1a4348343c1a62c",
+          "sha256": "ec73e7ef25073afe9d56f5b814911943ffa02e02ba17f0d197c65f694c8c3c04",
+          "sha1": "a7edf1a56bcff1724590f66e7d45bb85d208110c",
+          "md5": "168bc425fd2496122fd143c3738433fd"
+        }
+      ]
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "io.ktor",
+          "module": "ktor-client-core",
+          "version": {
+            "requires": "3.2.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.10"
+          }
+        },
+        {
+          "group": "io.ktor",
+          "module": "ktor-client-okhttp",
+          "version": {
+            "requires": "3.2.3"
+          }
+        },
+        {
+          "group": "com.squareup.okhttp3",
+          "module": "okhttp",
+          "version": {
+            "requires": "4.12.0"
+          }
+        },
+        {
+          "group": "androidx.core",
+          "module": "core",
+          "version": {
+            "requires": "1.17.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-android",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-serialization-json",
+          "version": {
+            "requires": "1.10.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pantau-http-core.aar",
+          "url": "pantau-http-core-android-2.0.1.aar",
+          "size": 248595,
+          "sha512": "b0b2bfee8ce0e702229c4ecaede120aa7117882f1aae6b1ead30360647717cfd7c5e2425c8e9f22242d236aaffe1f0febb93302264138dcbd1a4348343c1a62c",
+          "sha256": "ec73e7ef25073afe9d56f5b814911943ffa02e02ba17f0d197c65f694c8c3c04",
+          "sha1": "a7edf1a56bcff1724590f66e7d45bb85d208110c",
+          "md5": "168bc425fd2496122fd143c3738433fd"
+        }
+      ]
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "files": [
+        {
+          "name": "pantau-http-core-android-2.0.1-sources.jar",
+          "url": "pantau-http-core-android-2.0.1-sources.jar",
+          "size": 36367,
+          "sha512": "cdaa2b89e5a428aed62a48cb194f23652e35bc244229230ed26992774523de971261faa4394695990c87063ce2d1c668df173ad0cbab22bb568e71b68afc1255",
+          "sha256": "fc25576221f3b658d2e2e35370d6a8aff61fadd134ba875ecbf4107f961043a6",
+          "sha1": "918cdcd9bb0ee8b485bad24248b321a1338722fb",
+          "md5": "8973789d761329040bbfd357c57cb586"
+        }
+      ]
+    }
+  ]
+}
