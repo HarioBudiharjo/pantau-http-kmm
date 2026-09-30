@@ -84,6 +84,8 @@ skie {
         // Only our own API: wrappers for dependency APIs (Ktor) would reference symbols the framework does not export.
         group("com.pantauhttp") {
             co.touchlab.skie.configuration.DefaultArgumentInterop.Enabled(true)
+            // PantauHttpConfiguration has 8 defaulted parameters; SKIE's default cap is 5.
+            co.touchlab.skie.configuration.DefaultArgumentInterop.MaximumDefaultArgumentCount(8)
         }
     }
 }

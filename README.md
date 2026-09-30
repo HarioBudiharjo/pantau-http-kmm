@@ -130,7 +130,13 @@ Notifications require the host app to request `POST_NOTIFICATIONS` on API 33+; t
 import PantauHTTP
 
 // AppDelegate, before any URLSession is created
-PantauHttp.shared.start(configuration: PantauHttpConfiguration(dashboardUrl: nil))
+PantauHttp.shared.start(configuration: PantauHttpConfiguration())          // defaults
+PantauHttp.shared.start(configuration: PantauHttpConfiguration(            // or explicit: 2.0.1 exposes the full
+    maxTransactions: 200, bodySizeLimit: 1_048_576, shakeEnabled: true,   // initializer only (partial-argument
+    notificationPolicy: .whenBackgrounded,                                 // overloads arrive in the next release)
+    redactedHeaders: ["Authorization", "Cookie", "Set-Cookie", "Proxy-Authorization"],
+    ignoredHosts: [], dashboardUrl: "http://192.168.1.20:9435", dashboardDeviceName: nil
+))
 
 // Custom sessions and Alamofire: inject the engine BEFORE creating the session
 let configuration = URLSessionConfiguration.default
