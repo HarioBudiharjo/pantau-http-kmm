@@ -77,6 +77,22 @@ class PantauHttpInterceptorTest {
     }
 
     @Test
+    fun unreadBodyStillCompletesAndIsPatchedWhenRead() {
+        server.enqueue(MockResponse().setBody("lazy body").setHeader("Content-Type", "text/plain"))
+        val response = client.newCall(Request.Builder().url(server.url("/lazy")).build()).execute()
+        val tx = awaitCompleted().single()
+        assertEquals(TransactionState.Completed, tx.state, "completes at headers even though nobody read the body")
+        assertEquals(200, tx.statusCode)
+        assertEquals(9L, tx.responseBodySize, "announced Content-Length")
+        assertNull(tx.responseBody)
+
+        assertEquals("lazy body", response.body!!.string())
+        val deadline = System.currentTimeMillis() + 2_000
+        while (System.currentTimeMillis() < deadline && PantauHttpCore.transaction(tx.id)?.responseBody == null) Thread.sleep(5)
+        assertContentEquals("lazy body".encodeToByteArray(), PantauHttpCore.transaction(tx.id)!!.responseBody)
+    }
+
+    @Test
     fun truncatesLargeResponseBodyButDeliversItWhole() {
         val big = "y".repeat(1000)
         server.enqueue(MockResponse().setBody(big))

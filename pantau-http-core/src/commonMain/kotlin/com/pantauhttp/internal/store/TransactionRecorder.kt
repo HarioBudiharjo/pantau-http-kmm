@@ -95,6 +95,25 @@ internal class TransactionRecorder(
         }
     }
 
+    /** Fills in a request body that was streamed after [begin] (tee'd by the engine). */
+    fun requestBody(id: String, body: ByteArray?, totalSize: Long, truncated: Boolean) {
+        val limit = configuration.bodySizeLimit
+        val capped = body?.let { if (it.size > limit) it.copyOf(limit) else it }
+        store.upsert(id) {
+            it.copy(
+                requestBody = capped,
+                requestBodySize = totalSize,
+                isRequestBodyTruncated = truncated || totalSize > limit,
+            )
+        }
+    }
+
+    /** Records the announced response size before the body has been read (Content-Length). */
+    fun expectResponseSize(id: String, size: Long) {
+        if (size < 0) return
+        store.upsert(id) { it.copy(responseBodySize = size) }
+    }
+
     fun redirect(id: String, fromUrl: String, toUrl: String, statusCode: Int) {
         store.upsert(id) { it.copy(redirects = it.redirects + Redirect(fromUrl, toUrl, statusCode)) }
     }

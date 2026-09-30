@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.0.1
+
+### Fixed
+- OkHttp interceptor: transactions now complete when response headers arrive and the body is
+  patched in as the app reads it, so a body that is never read or closed no longer stays
+  "in progress" forever.
+- Ktor plugin: streamed request bodies (`WriteChannelContent` / `ReadChannelContent` without a
+  known length, or larger than `bodySizeLimit`) are tee'd instead of skipped: the first
+  `bodySizeLimit` bytes are kept, the real size is counted, memory stays bounded.
+
+### Added
+- Token-free Maven repository on GitHub Pages (`https://hariobudiharjo.github.io/pantau-http-kmm/maven`)
+  next to GitHub Packages.
+
 ## 2.0.0 — Kotlin Multiplatform
 
 PantauHTTP is now a Kotlin Multiplatform library with a shared Compose Multiplatform UI.

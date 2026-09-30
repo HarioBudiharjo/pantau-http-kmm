@@ -24,6 +24,11 @@ import io.ktor.http.content.OutgoingContent
 import io.ktor.http.takeFrom
 import io.ktor.util.AttributeKey
 import io.ktor.utils.io.ByteChannel
+import io.ktor.utils.io.ByteReadChannel
+import io.ktor.utils.io.ByteWriteChannel
+import io.ktor.utils.io.writeFully
+import io.ktor.utils.io.writer
+import kotlinx.coroutines.Dispatchers
 import io.ktor.utils.io.cancel
 import io.ktor.utils.io.readAvailable
 import io.ktor.utils.io.readRemaining
@@ -140,11 +145,11 @@ public val PantauHttpPlugin: ClientPlugin<PantauHttpPluginConfig> =
 
 private suspend fun TransactionRecorder.beginFrom(request: HttpRequestBuilder): String {
     val content = request.body as? OutgoingContent
-    val snapshot = content?.snapshot(PantauHttpCore.configuration.bodySizeLimit)
-    snapshot?.replacement?.let { request.setBody<OutgoingContent>(it) }
+    val limit = PantauHttpCore.configuration.bodySizeLimit
+    val snapshot = content?.snapshot(limit)
     val headers = request.headers.build().flatten().toMutableMap()
     content?.let { headers.putAll(it.contentHeaders()) }
-    return begin(
+    val id = begin(
         method = request.method.value,
         url = request.url.buildString(),
         headers = headers,
@@ -152,6 +157,12 @@ private suspend fun TransactionRecorder.beginFrom(request: HttpRequestBuilder): 
         bodySize = snapshot?.totalSize ?: 0L,
         truncated = snapshot?.truncated ?: false,
     )
+    // Streamed bodies are tee'd while the engine writes them and patched in afterwards.
+    snapshot?.replacement?.let { request.setBody<OutgoingContent>(it) }
+    snapshot?.streamed?.let { factory ->
+        request.setBody<OutgoingContent>(factory { bytes, total, truncated -> requestBody(id, bytes, total, truncated) })
+    }
+    return id
 }
 
 private fun TransactionRecorder.recordResponse(id: String, response: HttpResponse) {
@@ -182,12 +193,16 @@ private fun <K, V> MutableMap<K, V>.putIfAbsent(key: K, value: V) {
     if (!containsKey(key)) put(key, value)
 }
 
+internal typealias BodyDone = (bytes: ByteArray?, totalSize: Long, truncated: Boolean) -> Unit
+
 private class BodySnapshot(
     val bytes: ByteArray?,
     val totalSize: Long,
     val truncated: Boolean,
     /** Non-null when the original body was consumed and must be replaced. */
     val replacement: OutgoingContent? = null,
+    /** Non-null when the body is streamed: builds a tee'ing replacement that reports when done. */
+    val streamed: ((BodyDone) -> OutgoingContent)? = null,
 )
 
 /** Byte-array content that preserves the original content's metadata. */
@@ -200,6 +215,89 @@ private class ReplayableContent(
     override val status: HttpStatusCode? get() = original.status
     override val headers: Headers get() = original.headers
     override fun bytes(): ByteArray = bytes
+}
+
+/** Captures up to [limit] bytes of whatever flows through and counts the rest. */
+private class TeeBuffer(private val limit: Int) {
+    private var captured = ByteArray(0)
+    private var total = 0L
+
+    fun feed(chunk: ByteArray, count: Int) {
+        if (count <= 0) return
+        total += count
+        val room = limit - captured.size
+        if (room > 0) captured += chunk.copyOf(minOf(room, count))
+    }
+
+    fun report(done: BodyDone) = done(captured.takeIf { it.isNotEmpty() }, total, total > limit)
+}
+
+/** Forwards the original writes to the engine's channel while mirroring them into a [TeeBuffer]. */
+private class TeeWriteContent(
+    private val original: OutgoingContent.WriteChannelContent,
+    private val limit: Int,
+    private val done: BodyDone,
+) : OutgoingContent.WriteChannelContent() {
+    override val contentType: ContentType? get() = original.contentType
+    override val contentLength: Long? get() = original.contentLength
+    override val status: HttpStatusCode? get() = original.status
+    override val headers: Headers get() = original.headers
+
+    override suspend fun writeTo(channel: ByteWriteChannel) = coroutineScope {
+        val pipe = ByteChannel(autoFlush = true)
+        val producer = launch {
+            try {
+                original.writeTo(pipe)
+                pipe.flushAndClose()
+            } catch (t: Throwable) {
+                pipe.cancel(t)
+                throw t
+            }
+        }
+        val tee = TeeBuffer(limit)
+        try {
+            pipe.copyTo(channel, tee)
+        } finally {
+            tee.report(done)
+        }
+        producer.join()
+    }
+}
+
+/** Same as [TeeWriteContent] for pull-based bodies. */
+private class TeeReadContent(
+    private val original: OutgoingContent.ReadChannelContent,
+    private val limit: Int,
+    private val done: BodyDone,
+) : OutgoingContent.ReadChannelContent() {
+    override val contentType: ContentType? get() = original.contentType
+    override val contentLength: Long? get() = original.contentLength
+    override val status: HttpStatusCode? get() = original.status
+    override val headers: Headers get() = original.headers
+
+    override fun readFrom(): ByteReadChannel {
+        val source = original.readFrom()
+        val tee = TeeBuffer(limit)
+        return PantauHttpCore.scope.writer(Dispatchers.Default) {
+            try {
+                source.copyTo(channel, tee)
+            } finally {
+                tee.report(done)
+            }
+        }.channel
+    }
+}
+
+private suspend fun ByteReadChannel.copyTo(target: ByteWriteChannel, tee: TeeBuffer) {
+    val buffer = ByteArray(16 * 1024)
+    while (true) {
+        val read = readAvailable(buffer)
+        if (read < 0) break
+        if (read == 0) continue
+        target.writeFully(buffer, 0, read)
+        tee.feed(buffer, read)
+    }
+    target.flush()
 }
 
 private suspend fun OutgoingContent.snapshot(limit: Int): BodySnapshot? = when (this) {
@@ -215,7 +313,8 @@ private suspend fun OutgoingContent.snapshot(limit: Int): BodySnapshot? = when (
             val bytes = readFrom().readRemaining().readByteArray()
             BodySnapshot(bytes, bytes.size.toLong(), truncated = false, replacement = ReplayableContent(bytes, this))
         } else {
-            BodySnapshot(null, length ?: 0L, truncated = true)
+            BodySnapshot(null, length ?: 0L, truncated = length != null && length > limit,
+                streamed = { done -> TeeReadContent(this, limit, done) })
         }
     }
     is OutgoingContent.WriteChannelContent -> {
@@ -224,7 +323,8 @@ private suspend fun OutgoingContent.snapshot(limit: Int): BodySnapshot? = when (
             val bytes = drain()
             BodySnapshot(bytes, bytes.size.toLong(), truncated = false, replacement = ReplayableContent(bytes, this))
         } else {
-            BodySnapshot(null, length ?: 0L, truncated = true)
+            BodySnapshot(null, length ?: 0L, truncated = length != null && length > limit,
+                streamed = { done -> TeeWriteContent(this, limit, done) })
         }
     }
     is OutgoingContent.ContentWrapper -> delegate().snapshot(limit)

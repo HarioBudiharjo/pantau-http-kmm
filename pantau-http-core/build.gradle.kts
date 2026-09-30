@@ -90,6 +90,11 @@ skie {
 
 publishing {
     repositories {
+        // Static repo served from the gh-pages branch (no token needed by consumers); see scripts/publish-pages.sh
+        maven {
+            name = "Pages"
+            url = uri(rootProject.layout.buildDirectory.dir("maven-repo"))
+        }
         maven {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/HarioBudiharjo/pantau-http-kmm")

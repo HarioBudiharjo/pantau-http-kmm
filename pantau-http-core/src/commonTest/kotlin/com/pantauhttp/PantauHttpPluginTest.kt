@@ -9,6 +9,10 @@ import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.MockRequestHandler
 import io.ktor.client.engine.mock.respond
 import io.ktor.client.engine.mock.respondError
+import io.ktor.client.engine.mock.toByteArray
+import io.ktor.http.content.OutgoingContent
+import io.ktor.utils.io.ByteWriteChannel
+import io.ktor.utils.io.writeFully
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.request.get
 import io.ktor.client.request.header
@@ -128,6 +132,53 @@ class PantauHttpPluginTest {
         assertEquals(200L, tx.requestBodySize)
         assertTrue(tx.isRequestBodyTruncated)
         assertEquals(64, tx.requestBody!!.size)
+    }
+
+    @Test
+    fun streamedWriteBodyOfUnknownLengthIsTeed() = runTest {
+        val payload = ByteArray(5_000) { (it % 97).toByte() }
+        var received: ByteArray? = null
+        val client = client { request ->
+            received = request.body.toByteArray()
+            respond("", HttpStatusCode.NoContent)
+        }
+        client.post("https://api.example.com/stream") {
+            setBody(object : OutgoingContent.WriteChannelContent() {
+                override val contentLength: Long? get() = null
+                override suspend fun writeTo(channel: ByteWriteChannel) {
+                    payload.toList().chunked(1_000).forEach { channel.writeFully(it.toByteArray()) }
+                }
+            })
+        }
+        assertContentEquals(payload, received, "engine receives the whole body untouched")
+        val tx = awaitCompleted().single()
+        withTimeout(2_000) { while (PantauHttpCore.transaction(tx.id)!!.requestBodySize == 0L) realDelay(5) }
+        val patched = PantauHttpCore.transaction(tx.id)!!
+        assertEquals(5_000L, patched.requestBodySize)
+        assertTrue(patched.isRequestBodyTruncated)
+        assertContentEquals(payload.copyOf(64), patched.requestBody)
+    }
+
+    @Test
+    fun streamedReadBodyOfUnknownLengthIsTeed() = runTest {
+        val payload = ByteArray(3_000) { (it % 89).toByte() }
+        var received: ByteArray? = null
+        val client = client { request ->
+            received = request.body.toByteArray()
+            respond("", HttpStatusCode.NoContent)
+        }
+        client.post("https://api.example.com/stream") {
+            setBody(object : OutgoingContent.ReadChannelContent() {
+                override fun readFrom(): ByteReadChannel = ByteReadChannel(payload)
+            })
+        }
+        assertContentEquals(payload, received)
+        val tx = awaitCompleted().single()
+        withTimeout(2_000) { while (PantauHttpCore.transaction(tx.id)!!.requestBodySize == 0L) realDelay(5) }
+        val patched = PantauHttpCore.transaction(tx.id)!!
+        assertEquals(3_000L, patched.requestBodySize)
+        assertTrue(patched.isRequestBodyTruncated)
+        assertEquals(64, patched.requestBody!!.size)
     }
 
     @Test

@@ -24,40 +24,39 @@ Use it from `commonMain`. No `expect`/`actual` in your app: the library ships th
 
 ### Kotlin Multiplatform / Android (Gradle)
 
-Artifacts are published to [GitHub Packages](https://github.com/HarioBudiharjo?tab=packages&repo_name=pantau-http-kmm) (`com.pantauhttp:pantau-http` and `com.pantauhttp:pantau-http-core`, version 2.0.0). Add the repository once; GitHub requires a token with `read:packages` for every consumer, even for public packages:
+Artifacts are served from a static Maven repository on GitHub Pages; no account or token is needed:
 
 ```kotlin
 // settings.gradle.kts
 dependencyResolutionManagement {
     repositories {
-        maven("https://maven.pkg.github.com/HarioBudiharjo/pantau-http-kmm") {
-            credentials {
-                username = providers.gradleProperty("gpr.user").orNull ?: System.getenv("GITHUB_ACTOR")
-                password = providers.gradleProperty("gpr.key").orNull ?: System.getenv("GITHUB_TOKEN")
-            }
-        }
+        google()
+        mavenCentral()
+        maven("https://hariobudiharjo.github.io/pantau-http-kmm/maven")
     }
 }
 ```
 
 ```kotlin
 // commonMain
-implementation("com.pantauhttp:pantau-http:2.0.0")        // capture + Compose UI
+implementation("com.pantauhttp:pantau-http:2.0.1")        // capture + Compose UI
 // or, headless (no Compose): capture, exports and dashboard push only
-implementation("com.pantauhttp:pantau-http-core:2.0.0")
+implementation("com.pantauhttp:pantau-http-core:2.0.1")
 ```
 
-Consider keeping it out of release builds (`debugImplementation`, or a `BuildConfig.DEBUG` guard around `start()`). To build from source instead, `./gradlew publishToMavenLocal` puts the same coordinates in `~/.m2`.
+The same coordinates are also on [GitHub Packages](https://github.com/HarioBudiharjo?tab=packages&repo_name=pantau-http-kmm) (`https://maven.pkg.github.com/HarioBudiharjo/pantau-http-kmm`, which GitHub gates behind a token with `read:packages`), and `./gradlew publishToMavenLocal` puts them in `~/.m2` when building from source.
+
+Consider keeping it out of release builds (`debugImplementation`, or a `BuildConfig.DEBUG` guard around `start()`).
 
 ### iOS (Swift Package Manager)
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/HarioBudiharjo/pantau-http-kmm.git", from: "2.0.0")
+    .package(url: "https://github.com/HarioBudiharjo/pantau-http-kmm.git", from: "2.0.1")
 ]
 ```
 
-Link **exactly one** product: `PantauHTTP` (inspector UI + core) or `PantauHTTPCore` (headless). Both are prebuilt XCFrameworks attached to the [v2.0.0 GitHub release](https://github.com/HarioBudiharjo/pantau-http-kmm/releases/tag/v2.0.0); `Package.swift` pins their checksums. The Swift module is `PantauHTTP` (capitals, like the 1.x package) so it never shadows the `PantauHttp` entry-point class.
+Link **exactly one** product: `PantauHTTP` (inspector UI + core) or `PantauHTTPCore` (headless). Both are prebuilt XCFrameworks attached to the [GitHub release](https://github.com/HarioBudiharjo/pantau-http-kmm/releases/latest); `Package.swift` pins their checksums. The Swift module is `PantauHTTP` (capitals, like the 1.x package) so it never shadows the `PantauHttp` entry-point class.
 
 To build the frameworks yourself: `./gradlew :pantau-http:assemblePantauHTTPXCFramework` → `pantau-http/build/XCFrameworks/{debug,release}/PantauHTTP.xcframework`.
 
@@ -121,7 +120,7 @@ OkHttpClient.Builder()
     .build()
 ```
 
-A Ktor client built on such an OkHttp client is recorded once: the plugin marks its requests with `X-PantauHTTP-Trace` and the interceptor strips the header and passes them through. Add it as a network interceptor instead if you want each redirect hop as its own transaction.
+Transactions complete when response headers arrive; the body is filled in as your code reads it, so an unread body never leaves a transaction in progress. A Ktor client built on such an OkHttp client is recorded once: the plugin marks its requests with `X-PantauHTTP-Trace` and the interceptor strips the header and passes them through. Add it as a network interceptor instead if you want each redirect hop as its own transaction.
 
 Notifications require the host app to request `POST_NOTIFICATIONS` on API 33+; the library only posts when notifications are enabled.
 

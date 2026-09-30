@@ -23,6 +23,9 @@ import java.io.IOException
  * OkHttpClient.Builder().addInterceptor(PantauHttpInterceptor()).build()
  * ```
  * As a network interceptor each redirect hop becomes its own transaction instead.
+ *
+ * Transactions complete when response headers arrive; the body is filled in as the
+ * app reads it, so an unread body never leaves a transaction in progress.
  */
 public class PantauHttpInterceptor : Interceptor {
 
@@ -92,10 +95,13 @@ public class PantauHttpInterceptor : Interceptor {
             recorder.complete(id, null)
             return response
         }
+        // Complete once headers are in (Chucker semantics): an app that never reads or closes the
+        // body must not leave the transaction in progress. The tee patches the body in later.
+        recorder.expectResponseSize(id, body.contentLength())
+        recorder.complete(id, null)
         val gzipped = response.header("Content-Encoding").equals("gzip", ignoreCase = true)
         val tee = TeeResponseBody(body, limit, gzipped) { bytes, total, truncated ->
             recorder.setResponseBody(id, bytes, total, truncated)
-            recorder.complete(id, null)
         }
         return response.newBuilder().body(tee).build()
     }

@@ -24,7 +24,7 @@ android {
         minSdk = libs.versions.android.minSdkCompose.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
-        versionName = "2.0.0"
+        versionName = "2.0.1"
         buildConfigField("String", "PANTAU_DASHBOARD_URL", "\"$dashboardUrl\"")
     }
 
