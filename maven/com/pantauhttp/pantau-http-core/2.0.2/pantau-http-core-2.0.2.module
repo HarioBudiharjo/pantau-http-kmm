@@ -1,0 +1,247 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.pantauhttp",
+    "module": "pantau-http-core",
+    "version": "2.0.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.1.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "metadataApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "io.ktor",
+          "module": "ktor-client-core",
+          "version": {
+            "requires": "3.2.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-serialization-json",
+          "version": {
+            "requires": "1.10.0"
+          }
+        },
+        {
+          "group": "io.ktor",
+          "module": "ktor-client-darwin",
+          "version": {
+            "requires": "3.2.3"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pantau-http-core-metadata-2.0.2.jar",
+          "url": "pantau-http-core-2.0.2.jar",
+          "size": 21845,
+          "sha512": "e422e6290dc5d0680eb457b759cd63c0bc805a3291234a4f63021324b4a5c4baf158c32f63851b94917df04ef4ea1f9b142261d4fdc09127bfc07f54cddb3700",
+          "sha256": "8629022d4b7285238437215cdb8b44d105458b4ea2fd278b5368804f108d712d",
+          "sha1": "ecc62bc2cfcdd9527ba4ad460abd9dce5b87fa5a",
+          "md5": "e03a7e71ca0f6e846a43aa56183c0ae3"
+        }
+      ]
+    },
+    {
+      "name": "metadataSourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "files": [
+        {
+          "name": "pantau-http-core-kotlin-2.0.2-sources.jar",
+          "url": "pantau-http-core-2.0.2-sources.jar",
+          "size": 35144,
+          "sha512": "a61d65784458c1f8256f09a56d905ed8dc71e6f23d2a806fd87707342318d29230a831658f6cb1d82c6326e6de3bae6cfa8d264a9bb61a8530d6edbe251048c8",
+          "sha256": "a434d5dc1a27588ffc22fd21483d9eaf1e3dd951bd0105bd55b5606e85b2d4b0",
+          "sha1": "431b8ccea455e3e1980b9ba5c8ff99493a5b825e",
+          "md5": "c4cbe48a1624eeca71bfdbc4d2e8b1fa"
+        }
+      ]
+    },
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../pantau-http-core-android/2.0.2/pantau-http-core-android-2.0.2.module",
+        "group": "com.pantauhttp",
+        "module": "pantau-http-core-android",
+        "version": "2.0.2"
+      }
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../pantau-http-core-android/2.0.2/pantau-http-core-android-2.0.2.module",
+        "group": "com.pantauhttp",
+        "module": "pantau-http-core-android",
+        "version": "2.0.2"
+      }
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../pantau-http-core-android/2.0.2/pantau-http-core-android-2.0.2.module",
+        "group": "com.pantauhttp",
+        "module": "pantau-http-core-android",
+        "version": "2.0.2"
+      }
+    },
+    {
+      "name": "iosArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../pantau-http-core-iosarm64/2.0.2/pantau-http-core-iosarm64-2.0.2.module",
+        "group": "com.pantauhttp",
+        "module": "pantau-http-core-iosarm64",
+        "version": "2.0.2"
+      }
+    },
+    {
+      "name": "iosArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../pantau-http-core-iosarm64/2.0.2/pantau-http-core-iosarm64-2.0.2.module",
+        "group": "com.pantauhttp",
+        "module": "pantau-http-core-iosarm64",
+        "version": "2.0.2"
+      }
+    },
+    {
+      "name": "iosArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../pantau-http-core-iosarm64/2.0.2/pantau-http-core-iosarm64-2.0.2.module",
+        "group": "com.pantauhttp",
+        "module": "pantau-http-core-iosarm64",
+        "version": "2.0.2"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../pantau-http-core-iossimulatorarm64/2.0.2/pantau-http-core-iossimulatorarm64-2.0.2.module",
+        "group": "com.pantauhttp",
+        "module": "pantau-http-core-iossimulatorarm64",
+        "version": "2.0.2"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../pantau-http-core-iossimulatorarm64/2.0.2/pantau-http-core-iossimulatorarm64-2.0.2.module",
+        "group": "com.pantauhttp",
+        "module": "pantau-http-core-iossimulatorarm64",
+        "version": "2.0.2"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../pantau-http-core-iossimulatorarm64/2.0.2/pantau-http-core-iossimulatorarm64-2.0.2.module",
+        "group": "com.pantauhttp",
+        "module": "pantau-http-core-iossimulatorarm64",
+        "version": "2.0.2"
+      }
+    }
+  ]
+}

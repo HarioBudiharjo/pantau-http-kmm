@@ -1,0 +1,260 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../pantau-http/2.0.2/pantau-http-2.0.2.module",
+    "group": "com.pantauhttp",
+    "module": "pantau-http",
+    "version": "2.0.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.1.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "com.pantauhttp",
+          "module": "pantau-http-core",
+          "version": {
+            "requires": "2.0.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.runtime",
+          "module": "runtime",
+          "version": {
+            "requires": "1.11.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.foundation",
+          "module": "foundation",
+          "version": {
+            "requires": "1.11.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.ui",
+          "module": "ui",
+          "version": {
+            "requires": "1.11.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-core",
+          "version": {
+            "requires": "1.7.3"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pantau-http-iosSimulatorArm64Main-2.0.2.klib",
+          "url": "pantau-http-iossimulatorarm64-2.0.2.klib",
+          "size": 97834,
+          "sha512": "fa7ddb7e9005c4b9727290aafbf80fdc39c747cfaeb03f4e8ed6455d844219a52a3093761cc7cc6bd016b6b5661ff1beb3b99fb35996044c26dc875addf5cbed",
+          "sha256": "5e1bb6da4b2854fd30b2ee891b4fad96f117d4f44e726e12f1d5cc9a73586109",
+          "sha1": "bb8e7ae68c5916347220723cc222a78ec0fa6252",
+          "md5": "723bf3bef1b6e2d82529a30496ee12a2"
+        }
+      ]
+    },
+    {
+      "name": "iosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "files": [
+        {
+          "name": "pantau-http-iossimulatorarm64-2.0.2-sources.jar",
+          "url": "pantau-http-iossimulatorarm64-2.0.2-sources.jar",
+          "size": 13408,
+          "sha512": "c4b10471be97a61b3e1c7dd7f01993ac17f497ff2fe2f7601d0b78fc46750bb45b84cc795d74f0caeccefa0c608228de3ee9ffb992790ba1721a32b21beffa98",
+          "sha256": "37d8e780a9781493866aab5fe3c07456e95882d742c62025540387a912169a92",
+          "sha1": "5143203409e7a0cc5c471f4b95d98245c73505d4",
+          "md5": "42fdb4a9606f9bfd3d78cdca41defd61"
+        }
+      ]
+    },
+    {
+      "name": "iosSimulatorArm64ResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresources",
+        "org.gradle.usage": "kotlin-multiplatformresources",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "com.pantauhttp",
+          "module": "pantau-http-core",
+          "version": {
+            "requires": "2.0.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.runtime",
+          "module": "runtime",
+          "version": {
+            "requires": "1.11.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.foundation",
+          "module": "foundation",
+          "version": {
+            "requires": "1.11.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.ui",
+          "module": "ui",
+          "version": {
+            "requires": "1.11.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-core",
+          "version": {
+            "requires": "1.7.3"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pantau-http-2.0.2.kotlin_resources.zip",
+          "url": "pantau-http-iossimulatorarm64-2.0.2-kotlin_resources.kotlin_resources.zip",
+          "size": 340,
+          "sha512": "47958f5c42438533ee090adfb26b66c630a3a1890abe4e8e09597511b1ea55f5c17a2ed098652dee439a734146dd215f4863b7ebb8902f4a60274ec8816c61e1",
+          "sha256": "3f48505c5471ba1f0fdfb37e137d09089f7dd1b2b6871f300d47007ae8b99e7b",
+          "sha1": "c3c78b130bda2df65e62170a3b76c5e2e919c9ea",
+          "md5": "337d23144e1818925fa6192bc565c090"
+        }
+      ]
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "com.pantauhttp",
+          "module": "pantau-http-core",
+          "version": {
+            "requires": "2.0.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.runtime",
+          "module": "runtime",
+          "version": {
+            "requires": "1.11.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.foundation",
+          "module": "foundation",
+          "version": {
+            "requires": "1.11.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.ui",
+          "module": "ui",
+          "version": {
+            "requires": "1.11.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-core",
+          "version": {
+            "requires": "1.7.3"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pantau-http-iossimulatorarm64-2.0.2-metadata.jar",
+          "url": "pantau-http-iossimulatorarm64-2.0.2-metadata.jar",
+          "size": 3015,
+          "sha512": "cd438f493e9c45d401471bcd602b9d9414ec3d793b1281cb24eefdaff0a11692057691ac9bf004a36d744b64f5f881a82e0e5bceba9746d9a991468d922dc3a8",
+          "sha256": "5ac80a4373f5d0c2d416467549fdf0aafa6a6d8baef4a98184b039ec4a3d26b2",
+          "sha1": "2d00954bfcb60d751d2728550df5f5a5541eb7fb",
+          "md5": "b109a7c582e4f66cbfcd37f54086b3a4"
+        }
+      ]
+    }
+  ]
+}

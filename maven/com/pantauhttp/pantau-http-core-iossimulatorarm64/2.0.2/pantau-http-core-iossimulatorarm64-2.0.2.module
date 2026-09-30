@@ -1,0 +1,167 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../pantau-http-core/2.0.2/pantau-http-core-2.0.2.module",
+    "group": "com.pantauhttp",
+    "module": "pantau-http-core",
+    "version": "2.0.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.1.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "io.ktor",
+          "module": "ktor-client-core",
+          "version": {
+            "requires": "3.2.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.10"
+          }
+        },
+        {
+          "group": "io.ktor",
+          "module": "ktor-client-darwin",
+          "version": {
+            "requires": "3.2.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-serialization-json",
+          "version": {
+            "requires": "1.10.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pantau-http-core-iosSimulatorArm64Main-2.0.2.klib",
+          "url": "pantau-http-core-iossimulatorarm64-2.0.2.klib",
+          "size": 209029,
+          "sha512": "b08b4fcfe8c42c6ee6caca719013c7956355929799b2835d844dda20539124f9847455deecff7f57c323a7163bc49ea034e3c3904a2e35b5a00feffe2c09a32a",
+          "sha256": "360bd5cfc9805a2fd22a5c1d515628c26f6dcae1c0913b8272cf70130fbdfa61",
+          "sha1": "97cd7fce082a13985345e3157274570722b224d6",
+          "md5": "e99d5f1503058f495da5c2cfb61a14a2"
+        },
+        {
+          "name": "pantau-http-core-iosSimulatorArm64Cinterop-PantauShimMain-2.0.2.klib",
+          "url": "pantau-http-core-iossimulatorarm64-2.0.2-cinterop-PantauShim.klib",
+          "size": 12058,
+          "sha512": "c45dd7106f4ed74cefaba43b25e54e794542cbc2903625200d89d2f86fd01a6d4f2e085243882f7f082188f6ab0124f6dcbadd1f7a7f7495b02cf0be75df7190",
+          "sha256": "59e1e4ba1ee7c5534f4c53ddbc140ffbbdd7bffc4157ddd6e075c015eec16d0c",
+          "sha1": "42ca3cf8e2155520fd1726faef50f3b4c3051065",
+          "md5": "7ea4e2999495533f04c5e08d04d24324"
+        }
+      ]
+    },
+    {
+      "name": "iosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "files": [
+        {
+          "name": "pantau-http-core-iossimulatorarm64-2.0.2-sources.jar",
+          "url": "pantau-http-core-iossimulatorarm64-2.0.2-sources.jar",
+          "size": 35144,
+          "sha512": "ebb0c83e92fcf807a4b9922ec6a7eb2aaff54a7ca7bea20513df6533a54efe1f8b0e4bee78c7d103428dcbb51a1c9521e2166d9f4dcb539145a0ed2c9c1de35b",
+          "sha256": "d543f72c63187e12721cdd05a6eaec37cb3f4cf5636241e183b81295f97b2928",
+          "sha1": "d888ae0ae28c491181f82f4ea9e70ada63344231",
+          "md5": "960a71d31c108eb62be71265ba2326ce"
+        }
+      ]
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "io.ktor",
+          "module": "ktor-client-core",
+          "version": {
+            "requires": "3.2.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.10"
+          }
+        },
+        {
+          "group": "io.ktor",
+          "module": "ktor-client-darwin",
+          "version": {
+            "requires": "3.2.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-serialization-json",
+          "version": {
+            "requires": "1.10.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pantau-http-core-iossimulatorarm64-2.0.2-metadata.jar",
+          "url": "pantau-http-core-iossimulatorarm64-2.0.2-metadata.jar",
+          "size": 24592,
+          "sha512": "7c6135c75b03c9c1a93b27b9c3c3c2dff133c6e837782fe97f5ffa158922c53df0fa06db4cc470dcff1fdcb422a6e4f67fa3ba7b807f2dc25355078de1b319e9",
+          "sha256": "01fe54b5787ab754a74335f564975d4a76d99df62a9cf344e26576ae8ff1dd52",
+          "sha1": "4cb9868f5146a85787e857a9c4b786a33e9d33a5",
+          "md5": "95cdf75f029fda0f992bcac8be2e620d"
+        }
+      ]
+    }
+  ]
+}
