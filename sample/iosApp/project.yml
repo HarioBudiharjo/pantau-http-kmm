@@ -1,0 +1,50 @@
+name: PantauHttpSample
+options:
+  bundleIdPrefix: com.pantauhttp
+  deploymentTarget:
+    iOS: "15.0"
+  xcodeVersion: "16.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    ENABLE_USER_SCRIPT_SANDBOXING: "NO"
+targets:
+  PantauHttpSample:
+    type: application
+    platform: iOS
+    sources:
+      - path: PantauHttpSample
+    preBuildScripts:
+      - name: Build Kotlin framework (PantauHTTP)
+        script: |
+          cd "$SRCROOT/../.."
+          export JAVA_HOME="${JAVA_HOME:-/Users/hariobudiharjo/Library/Java/JavaVirtualMachines/ms-17.0.18/Contents/Home}"
+          ./gradlew :pantau-http:embedAndSignAppleFrameworkForXcode
+        basedOnDependencyAnalysis: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.pantauhttp.sample
+        FRAMEWORK_SEARCH_PATHS:
+          - "$(inherited)"
+          - "$(SRCROOT)/../../pantau-http/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)"
+        OTHER_LDFLAGS:
+          - "$(inherited)"
+          - "-framework"
+          - "PantauHTTP"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        GENERATE_INFOPLIST_FILE: "NO"
+        INFOPLIST_FILE: PantauHttpSample/Info.plist
+        CODE_SIGN_STYLE: Automatic
+    info:
+      path: PantauHttpSample/Info.plist
+      properties:
+        CFBundleDisplayName: Pantau Sample
+        CFBundleShortVersionString: "2.0.0"
+        CFBundleVersion: "1"
+        UILaunchScreen: {}
+        CADisableMinimumFrameDurationOnPhone: true
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+        NSLocalNetworkUsageDescription: Connects to the PantauHTTP dashboard server on your Mac during development.

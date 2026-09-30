@@ -1,0 +1,14 @@
+.gradle/
+build/
+**/build/
+.kotlin/
+local.properties
+.idea/
+*.iml
+.DS_Store
+xcuserdata/
+*.xcodeproj
+!sample/iosApp/project.yml
+Pods/
+DerivedData/
+.env

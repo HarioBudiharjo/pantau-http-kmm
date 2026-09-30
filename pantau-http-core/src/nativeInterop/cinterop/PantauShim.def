@@ -1,0 +1,69 @@
+language = Objective-C
+package = com.pantauhttp.shim
+headers = PantauShim.h
+headerFilter = PantauShim.h
+compilerOpts = -fobjc-arc
+linkerOpts = -framework Foundation -framework UIKit
+
+---
+#import "PantauShim.h"
+#import <TargetConditionals.h>
+#import <objc/runtime.h>
+#import <objc/message.h>
+
+// NOTE: no @implementation blocks here; the cinterop indexer does not accept them.
+// Everything is done through the Objective-C runtime from plain C.
+
+static PantauCanInitHandler _pantauCanInit = nil;
+
+static BOOL pantau_canInitWithRequest(id self, SEL _cmd, id request) {
+    PantauCanInitHandler handler = _pantauCanInit;
+    return handler ? handler(request) : NO;
+}
+
+static id pantau_canonicalRequestForRequest(id self, SEL _cmd, id request) {
+    return request;
+}
+
+void PantauInstallProtocolGate(Class protocolClass, PantauCanInitHandler handler) {
+    _pantauCanInit = handler;
+    if (!protocolClass) return;
+    Class meta = object_getClass(protocolClass);
+    class_addMethod(meta, sel_registerName("canInitWithRequest:"), (IMP)pantau_canInitWithRequest, "B@:@");
+    class_addMethod(meta, sel_registerName("canonicalRequestForRequest:"), (IMP)pantau_canonicalRequestForRequest, "@@:@");
+}
+
+static void (^_pantauOnShake)(void) = nil;
+
+static void pantau_motionEnded(id self, SEL _cmd, long motion, id event) {
+    // Implementations are exchanged: this selector now points at the original.
+    ((void (*)(id, SEL, long, id))objc_msgSend)(self, sel_registerName("pantau_motionEnded:withEvent:"), motion, event);
+    if (motion == 1 /* UIEventSubtypeMotionShake */) {
+        void (^handler)(void) = _pantauOnShake;
+        if (handler) handler();
+    }
+}
+
+void PantauShakeInstall(void (^onShake)(void)) {
+    _pantauOnShake = onShake;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        Class responder = objc_getClass("UIResponder");
+        if (!responder) return;
+        SEL originalSelector = sel_registerName("motionEnded:withEvent:");
+        SEL swizzledSelector = sel_registerName("pantau_motionEnded:withEvent:");
+        Method original = class_getInstanceMethod(responder, originalSelector);
+        if (!original) return;
+        if (!class_addMethod(responder, swizzledSelector, (IMP)pantau_motionEnded, method_getTypeEncoding(original))) return;
+        Method swizzled = class_getInstanceMethod(responder, swizzledSelector);
+        if (swizzled) method_exchangeImplementations(original, swizzled);
+    });
+}
+
+BOOL PantauIsSimulator(void) {
+#if TARGET_OS_SIMULATOR
+    return YES;
+#else
+    return NO;
+#endif
+}

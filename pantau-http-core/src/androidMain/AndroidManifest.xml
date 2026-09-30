@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application>
+        <!-- Captures the application Context so PantauHttp.start() works from commonMain. -->
+        <provider
+            android:name="com.pantauhttp.android.PantauHttpInitProvider"
+            android:authorities="${applicationId}.pantauhttp-init"
+            android:exported="false"
+            android:initOrder="100" />
+    </application>
+</manifest>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity
+            android:name="com.pantauhttp.ui.PantauHttpActivity"
+            android:exported="false"
+            android:label="Pantau HTTP"
+            android:launchMode="singleTask"
+            android:taskAffinity="${applicationId}.pantauhttp"
+            android:theme="@android:style/Theme.Material.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="com.pantauhttp.OPEN_INSPECTOR" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.pantauhttp.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/pantau_http_paths" />
+        </provider>
+    </application>
+</manifest>

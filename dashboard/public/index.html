@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PantauHTTP Dashboard</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <span id="status-dot" class="dot" title="Live connection status"></span>
+      <h1>PantauHTTP</h1>
+    </div>
+    <input id="search" type="search" placeholder="Filter by method, URL or status…" autocomplete="off">
+    <nav id="filters" class="chips">
+      <button class="chip active" data-filter="all">All</button>
+      <button class="chip" data-filter="2xx">2xx</button>
+      <button class="chip" data-filter="3xx">3xx</button>
+      <button class="chip" data-filter="4xx">4xx</button>
+      <button class="chip" data-filter="5xx">5xx</button>
+      <button class="chip" data-filter="failed">Failed</button>
+    </nav>
+    <div class="actions">
+      <button id="download-har" title="Download all as HAR">HAR</button>
+      <button id="clear" class="danger" title="Clear the log">Clear</button>
+    </div>
+  </header>
+
+  <main>
+    <aside id="device-pane">
+      <div class="pane-title">Devices</div>
+      <ul id="device-list"></ul>
+    </aside>
+
+    <section id="list-pane">
+      <ul id="tx-list"></ul>
+      <p id="empty" class="empty">Waiting for traffic…<br><span>Set <code>configuration.dashboardURL</code> in your app to this server's URL.</span></p>
+    </section>
+
+    <section id="detail-pane" class="hidden">
+      <div class="detail-header">
+        <div id="detail-title"></div>
+        <div class="detail-actions">
+          <button id="copy-curl">Copy cURL</button>
+          <button id="download-har-one">HAR</button>
+          <button id="close-detail" title="Close">✕</button>
+        </div>
+      </div>
+      <nav class="tabs">
+        <button class="tab active" data-tab="overview">Overview</button>
+        <button class="tab" data-tab="request">Request</button>
+        <button class="tab" data-tab="response">Response</button>
+      </nav>
+      <div id="detail-content"></div>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
