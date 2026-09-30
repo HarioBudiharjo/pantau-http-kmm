@@ -1,0 +1,32 @@
+name: PantauDemo
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    iOS: "15.0"
+packages:
+  PantauHTTP:
+    url: https://github.com/HarioBudiharjo/pantau-http-kmm.git
+    from: "2.0.1"
+targets:
+  PantauDemo:
+    type: application
+    platform: iOS
+    sources: [PantauDemo]
+    dependencies:
+      - package: PantauHTTP
+        product: PantauHTTP
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.pantaudemo
+        GENERATE_INFOPLIST_FILE: "NO"
+        INFOPLIST_FILE: PantauDemo/Info.plist
+        TARGETED_DEVICE_FAMILY: "1"
+    info:
+      path: PantauDemo/Info.plist
+      properties:
+        CFBundleDisplayName: Pantau Demo
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        UILaunchScreen: {}
+        CADisableMinimumFrameDurationOnPhone: true
+        NSAppTransportSecurity: { NSAllowsLocalNetworking: true }

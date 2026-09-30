@@ -164,6 +164,8 @@ Set `dashboardUrl` to the printed address (`http://10.0.2.2:9435` from the Andro
 
 ## Samples
 
+- `example/`: a standalone app pair that consumes the **published** SDK (Gradle from the GitHub Pages repository, iOS via Swift Package Manager); the quickest way to see the integration a real app needs.
+
 - `sample/androidApp`: `./gradlew :sample:androidApp:installDebug -PdashboardUrl=http://10.0.2.2:9435`, then `adb shell am start -n com.pantauhttp.sample/.MainActivity --ez autofire true`.
 - `sample/iosApp`: `cd sample/iosApp && xcodegen generate && open PantauHttpSample.xcodeproj` (the pre-build script runs `embedAndSignAppleFrameworkForXcode`). Set `PANTAU_DASHBOARD_URL` and `AUTOFIRE=1` in the scheme's environment to script it.
 

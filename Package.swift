@@ -15,13 +15,13 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "PantauHTTP",
-            url: "https://github.com/HarioBudiharjo/pantau-http-kmm/releases/download/v2.0.0/PantauHTTP.xcframework.zip",
-            checksum: "7ba3486e13971059e39f6580d59e46a41c19129f4277bb143600f1a16ea59cfd"
+            url: "https://github.com/HarioBudiharjo/pantau-http-kmm/releases/download/v2.0.1/PantauHTTP.xcframework.zip",
+            checksum: "55ca8c41972989e9fc67914c1418c03e51f86dda4f71e56bef8b14adc84e648f"
         ),
         .binaryTarget(
             name: "PantauHTTPCore",
-            url: "https://github.com/HarioBudiharjo/pantau-http-kmm/releases/download/v2.0.0/PantauHTTPCore.xcframework.zip",
-            checksum: "d84c418c475303574b5201daecd86f0b34c827bbd101e481c2c630f99042d8bd"
+            url: "https://github.com/HarioBudiharjo/pantau-http-kmm/releases/download/v2.0.1/PantauHTTPCore.xcframework.zip",
+            checksum: "6e9b6f2d98e1c96c4958391088a0e8b7faa1f6e7aae0b41dcf7d3f0cebbe441e"
         ),
     ]
 )
