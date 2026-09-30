@@ -81,6 +81,16 @@ skie {
 }
 
 publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/HarioBudiharjo/pantau-http-kmm")
+            credentials {
+                username = (project.findProperty("gpr.user") as String?) ?: System.getenv("GITHUB_ACTOR")
+                password = (project.findProperty("gpr.key") as String?) ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
     publications.withType<MavenPublication> {
         pom {
             name.set("PantauHTTP")

@@ -24,6 +24,22 @@ Use it from `commonMain`. No `expect`/`actual` in your app: the library ships th
 
 ### Kotlin Multiplatform / Android (Gradle)
 
+Artifacts are published to GitHub Packages. Add the repository once (a GitHub token with `read:packages` is required by GitHub for every consumer):
+
+```kotlin
+// settings.gradle.kts
+dependencyResolutionManagement {
+    repositories {
+        maven("https://maven.pkg.github.com/HarioBudiharjo/pantau-http-kmm") {
+            credentials {
+                username = providers.gradleProperty("gpr.user").orNull ?: System.getenv("GITHUB_ACTOR")
+                password = providers.gradleProperty("gpr.key").orNull ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
+```
+
 ```kotlin
 // commonMain
 implementation("com.pantauhttp:pantau-http:2.0.0")        // capture + Compose UI
@@ -31,23 +47,19 @@ implementation("com.pantauhttp:pantau-http:2.0.0")        // capture + Compose U
 implementation("com.pantauhttp:pantau-http-core:2.0.0")
 ```
 
-Publish locally while the artifacts are not on Maven Central yet:
+Consider keeping it out of release builds (`debugImplementation`, or a `BuildConfig.DEBUG` guard around `start()`). To build from source instead, `./gradlew publishToMavenLocal` puts the same coordinates in `~/.m2`.
 
-```bash
-export JAVA_HOME=$(/usr/libexec/java_home -v 17)
-./gradlew publishToMavenLocal          # ~/.m2/repository/com/pantauhttp/…
+### iOS (Swift Package Manager)
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/HarioBudiharjo/pantau-http-kmm.git", from: "2.0.0")
+]
 ```
 
-Consider keeping it out of release builds (`debugImplementation`, or a `BuildConfig.DEBUG` guard around `start()`).
+Link **exactly one** product: `PantauHTTP` (inspector UI + core) or `PantauHTTPCore` (headless). Both are prebuilt XCFrameworks attached to the [GitHub release](https://github.com/HarioBudiharjo/pantau-http-kmm/releases); `Package.swift` pins their checksums. The Swift module is `PantauHTTP` (capitals, like the 1.x package) so it never shadows the `PantauHttp` entry-point class.
 
-### iOS (XCFramework)
-
-```bash
-./gradlew :pantau-http:assemblePantauHTTPXCFramework
-# → pantau-http/build/XCFrameworks/{debug,release}/PantauHTTP.xcframework
-```
-
-The Swift module is `PantauHTTP` (capitals, like the 1.x package) so it never shadows the `PantauHttp` entry-point class. Drag `PantauHTTP.xcframework` into your Xcode target (or reference it as an SPM `binaryTarget` / CocoaPods `vendored_frameworks`). Link **exactly one** of `PantauHTTP.xcframework` (UI + core) or `PantauHTTPCore.xcframework` (headless); they cannot be linked together.
+To build the frameworks yourself: `./gradlew :pantau-http:assemblePantauHTTPXCFramework` → `pantau-http/build/XCFrameworks/{debug,release}/PantauHTTP.xcframework`.
 
 If your iOS app already embeds a Kotlin framework from your own shared module, depend on `com.pantauhttp:pantau-http` from that module instead and `export(...)` it, so there is still a single Kotlin runtime in the process.
 
