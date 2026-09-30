@@ -24,7 +24,7 @@ Use it from `commonMain`. No `expect`/`actual` in your app: the library ships th
 
 ### Kotlin Multiplatform / Android (Gradle)
 
-Artifacts are published to GitHub Packages. Add the repository once (a GitHub token with `read:packages` is required by GitHub for every consumer):
+Artifacts are published to [GitHub Packages](https://github.com/HarioBudiharjo?tab=packages&repo_name=pantau-http-kmm) (`com.pantauhttp:pantau-http` and `com.pantauhttp:pantau-http-core`, version 2.0.0). Add the repository once; GitHub requires a token with `read:packages` for every consumer, even for public packages:
 
 ```kotlin
 // settings.gradle.kts
@@ -57,7 +57,7 @@ dependencies: [
 ]
 ```
 
-Link **exactly one** product: `PantauHTTP` (inspector UI + core) or `PantauHTTPCore` (headless). Both are prebuilt XCFrameworks attached to the [GitHub release](https://github.com/HarioBudiharjo/pantau-http-kmm/releases); `Package.swift` pins their checksums. The Swift module is `PantauHTTP` (capitals, like the 1.x package) so it never shadows the `PantauHttp` entry-point class.
+Link **exactly one** product: `PantauHTTP` (inspector UI + core) or `PantauHTTPCore` (headless). Both are prebuilt XCFrameworks attached to the [v2.0.0 GitHub release](https://github.com/HarioBudiharjo/pantau-http-kmm/releases/tag/v2.0.0); `Package.swift` pins their checksums. The Swift module is `PantauHTTP` (capitals, like the 1.x package) so it never shadows the `PantauHttp` entry-point class.
 
 To build the frameworks yourself: `./gradlew :pantau-http:assemblePantauHTTPXCFramework` → `pantau-http/build/XCFrameworks/{debug,release}/PantauHTTP.xcframework`.
 
